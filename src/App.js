@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.scss'
 import About from './About/About'
 import Cars from './Cars/Cars'
-import { Route, Link } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 
 class App extends Component {
   render() {
@@ -12,13 +12,17 @@ class App extends Component {
         <nav className="nav">
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <NavLink to="/" exact activeClassName={'active-link'}>Home</NavLink>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <NavLink to="/about" activeStyle={{color: 'blue'}}>About</NavLink>
             </li>
             <li>
-              <Link to="/cars">Cars</Link>
+              <NavLink to={{
+                pathname: '/cars',
+                search: '?a=1&b=2',
+                hash: 'some-hash'
+              }}>Cars</NavLink>
             </li>
           </ul>
         </nav>
