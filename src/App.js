@@ -2,9 +2,21 @@ import React, {Component} from 'react'
 import './App.scss'
 import About from './About/About'
 import Cars from './Cars/Cars'
-import { Route, NavLink } from 'react-router-dom'
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom'
+import carDetail from './CarDetail/CarDetail'
 
 class App extends Component {
+
+  state = {
+    isLoggedIn: false
+  }
+
+  loginHandler = () => {
+    this.setState({
+      isLoggedIn: !this.state.isLoggedIn
+    })
+  }
+
   render() {
 
     return (
@@ -19,19 +31,30 @@ class App extends Component {
             </li>
             <li>
               <NavLink to={{
-                pathname: '/cars',
-                search: '?a=1&b=2',
-                hash: 'some-hash'
+                pathname: '/cars'
               }}>Cars</NavLink>
             </li>
           </ul>
         </nav>
 
         <hr/>
+          <h1>Logged in: {this.state.isLoggedIn ? 'TRUE' : 'FALSE'}</h1>
+          <button onClick={this.loginHandler}>Log</button>
+        <hr/>
 
+        <Switch>
           <Route path='/' exact render={() => <h1>Home page</h1>} />
-          <Route path='/about'  render={() => <About />} />
-          <Route path='/cars' render={() => <Cars />} /> 
+          {
+            this.state.isLoggedIn
+              ? <Route path='/about'  render={() => <About />} />
+              : null
+          }
+          <Route path='/cars/:name' component={carDetail} />
+          <Route path='/cars' component={Cars} />
+          <Redirect to='/' />
+          
+          {/* <Route render={() => <h1 style={{color: 'red', textAlign: 'center'}}>404 not found</h1>} /> */}
+        </Switch>
       </div>
     );
   }
