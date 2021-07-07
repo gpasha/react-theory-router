@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './App.scss'
 import About from './About/About'
 import Cars from './Cars/Cars'
+import { Route, Link } from 'react-router-dom'
 
 class App extends Component {
   render() {
@@ -11,18 +12,22 @@ class App extends Component {
         <nav className="nav">
           <ul>
             <li>
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="/about">About</a>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/cars">Cars</Link>
             </li>
           </ul>
         </nav>
 
         <hr/>
-        <About />
 
-        <Cars />
+          <Route path='/' exact render={() => <h1>Home page</h1>} />
+          <Route path='/about'  render={() => <About />} />
+          <Route path='/cars' render={() => <Cars />} /> 
       </div>
     );
   }
